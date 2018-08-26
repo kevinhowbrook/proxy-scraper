@@ -6,17 +6,18 @@ from multiprocessing import Pool
 import feedparser
 import json
 import random
+# populate proxies - uncomment
+# proxies = gen_proxies()
 
-# populate proxies
-#proxies = gen_proxies()
 
-# Get the latest feed post ID
 def get_latest_from_feed():
+    # Get the latest feed post ID
     url = 'http://feeds.feedburner.com/ufostalker'
     d = feedparser.parse(url)
     latest_link = d['entries'][0]['link'].split('/')
     latest_id = latest_link[-1]
     return int(latest_id)
+
 
 # Get a proxy value from the generated list
 def get_proxy(protocol):
@@ -35,7 +36,6 @@ def get_proxy(protocol):
     return ip
 
 
-
 def get_listing():
     links = []
     for i in range(get_latest_from_feed() - 100, get_latest_from_feed()):
@@ -48,22 +48,25 @@ def get_listing():
 def parse(url):
     print('running')
     headers = {
-        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'}
+        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) \
+         AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 \
+         Safari/537.36'}
 
     info = []
     title_text = '-'
     while True:
         try:
-            http_proxy  = get_proxy('http')
+            http_proxy = get_proxy('http')
             https_proxy = get_proxy('https')
 
             proxyDict = {
-                        "http"  : "{}".format(http_proxy.rstrip()),
+                        "http": "{}".format(http_proxy.rstrip()),
                         # "https" : "{}".format(https_proxy.rstrip())
                         }
             print(proxyDict)
 
-            r = requests.get(url, headers=headers, timeout=20, proxies=proxyDict)
+            r = requests.get(url, headers=headers, timeout=20,
+                             proxies=proxyDict)
             sleep(15)
 
             if r.status_code == 200:
@@ -83,7 +86,6 @@ def parse(url):
                 info.append('failed')
         except Exception as ex:
             print(str(ex))
-            print('ERRRRROOOOOOOR')
             continue
         finally:
             if len(info) > 0:
@@ -106,16 +108,3 @@ with Pool(10) as p:
 
 with open('data.json', 'w') as outfile:
     json.dump(records, outfile)
-
-# with open('proxy/proxies.txt','r') as reader :
-#     for line in reader :
-#         proxy = line.split('\n', 1)[0]
-#         http_proxy =  'http://'+proxy
-#         https_proxy = 'https://'+proxy
-
-#         proxies = {
-#             'http': http_proxy,
-#             'https': https_proxy,
-#         }
-
-#         print(proxies)

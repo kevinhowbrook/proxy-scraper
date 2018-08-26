@@ -1,3 +1,4 @@
 .vscode
 proxies.txt
 data.json
+__pycache__
