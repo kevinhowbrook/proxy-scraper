@@ -10,15 +10,6 @@ import random
 # proxies = gen_proxies()
 
 
-def get_latest_from_feed():
-    # Get the latest feed post ID
-    url = 'http://feeds.feedburner.com/ufostalker'
-    d = feedparser.parse(url)
-    latest_link = d['entries'][0]['link'].split('/')
-    latest_id = latest_link[-1]
-    return int(latest_id)
-
-
 # Get a proxy value from the generated list
 def get_proxy(protocol):
     http = []
@@ -38,8 +29,8 @@ def get_proxy(protocol):
 
 def get_listing():
     links = []
-    for i in range(get_latest_from_feed() - 100, get_latest_from_feed()):
-        links.append('http://ufostalker.com:8080/event?id={}'.format(i))
+    for i in range(0, 100):
+        links.append('yoururl.com/posts?id={}'.format(i))
     print(links)
     return links
 
