@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+proxybroker = "*"
+"beautifulsoup4" = "*"
+feedparser = "*"
+lxml = "*"
+"html5lib" = "*"
+flask = "*"
+fake-useragent = "*"
+requests = "*"
+
+[dev-packages]
+"flake8" = "*"
+"pep8" = "*"
+
+[requires]
+python_version = "3.6"
