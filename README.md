@@ -5,7 +5,7 @@ _This is a simple starting point for a basic(ish) webscraper using Python, Pipen
 > Scrape responsibly, see https://www.scrapehero.com/how-to-prevent-getting-blacklisted-while-scraping/#easiest-way-to-find-if-a-site-doesnt-want-data-to-be-scraped
 
 ### Running
-First run `pipenv isntall` and `pipenv shell` to start the environment.
+First run `pipenv install` and `pipenv shell` to start the environment.
 
 `python main.py` will start the scraping.
 
