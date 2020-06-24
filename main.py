@@ -22,15 +22,13 @@ def get_proxy(protocol):
             https.append(line)
     if protocol == 'http':
         ip = str(random.choice(http))
-    if protocol == 'https':
+    elif protocol == 'https':
         ip = str(random.choice(https))
     return ip
 
 
 def get_listing():
-    links = []
-    for i in range(0, 100):
-        links.append('yoururl.com/posts?id={}'.format(i))
+    links = ['yoururl.com/posts?id={}'.format(i) for i in range(100)]
     print(links)
     return links
 
@@ -65,11 +63,7 @@ def parse(url):
                 html = r.text
                 soup = BeautifulSoup(html, 'lxml')
                 title = soup.find('summary')
-                if title is not None:
-                    title_text = title.text.strip()
-                else:
-                    title_text = 'no title'
-
+                title_text = title.text.strip() if title is not None else 'no title'
                 info.append(url)
                 info.append(title_text)
             else:
@@ -79,7 +73,7 @@ def parse(url):
             print(str(ex))
             continue
         finally:
-            if len(info) > 0:
+            if info:
                 return ','.join(info)
             else:
                 return None
